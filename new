@@ -1,0 +1,26 @@
+# 使用基础镜像CentOS 7
+#FROM centos:7
+FROM debian
+
+# 第一步：更新系统并安装所需命令
+RUN apt-get update -y && \
+    apt-get install -y wget ca-certificates qrencode unzip tar
+
+# 第二步：将ttnode-manager-x86.tar.gz自动解压到/usr并重命名为node
+ADD ttnode-manager-x86.tar.gz /usr/
+RUN mv /usr/ttnode-manager-x86 /usr/node
+
+# 第三步：创建所需文件夹
+RUN mkdir -p /opt/app && \
+    mkdir -p /mnt/data/ttnode
+
+# 第四步：将缓存目录写入配置文件
+RUN echo "/mnt/data/ttnode" > /usr/node/config.txt
+
+# 第五步：赋权启动脚本
+RUN chmod 777 /usr/node/ttnode_manager
+#指定脚本工作目录
+WORKDIR /usr/node
+# 启动脚本
+ENTRYPOINT ["./ttnode_manager"]
+#CMD ["sleep", "infinity"]
