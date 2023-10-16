@@ -1,0 +1,5 @@
+FROM debian
+RUN tar wget ca-certificates  qrencode  tar 
+RUN sudo sh -c "$(wget https://gitee.com/shenzhen-sweet-sugar/ttnode-auto-deploy/raw/master/setup.sh -O -) -c=/mnt/data/ttnode"
+RUN sudo tail -f /usr/node/nohup.out
+EXPOSE 1024
