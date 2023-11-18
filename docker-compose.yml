@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  vnc:
+    build: .
+    ports:
+      - "8900:8900"
